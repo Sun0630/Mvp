@@ -13,6 +13,7 @@ import com.sx.mvp.mvp.base.BasePresenter;
 public class ArticleInfoPresenter extends BasePresenter<ArticleInfoContract.View> implements ArticleInfoContract.Presenter {
 
     private static final int STATE_CODE = 0;
+
     private ArticleInfoContract.Model mModel;
 
     public ArticleInfoPresenter() {
@@ -23,29 +24,25 @@ public class ArticleInfoPresenter extends BasePresenter<ArticleInfoContract.View
     @Override
     public void getArticleList(int pageNum) {
 
-        mView.onShowLoading();
+        getView().onShowLoading();
 
         mModel
                 .getArticleList(pageNum)
                 .subscribe(new RequestCallback<BaseBean<TestBean>>() {
                     @Override
                     protected void onSuccess(BaseBean<TestBean> bean) {
-                        // 因为进行了解绑操作，所以需要判断mView是否为空,挺烦的
-                        if (mView != null) {
-                            mView.onHideLoading();
-                            if (bean.errorCode == STATE_CODE) {
-                                mView.onSuccess(bean);
-                            } else {
-                                mView.onError(bean.errorMsg);
-                            }
+                        // 因为进行了解绑操作，所以需要判断mView是否为空,挺烦的，可以在基类里面使用动态代理进行切面处理
+                        getView().onHideLoading();
+                        if (bean.errorCode == STATE_CODE) {
+                            getView().onSuccess(bean);
+                        } else {
+                            getView().onError(bean.errorMsg);
                         }
                     }
 
                     @Override
                     protected void onFailer(Throwable e) {
-                        if (mView != null) {
-                            mView.onError(e.getMessage());
-                        }
+                        getView().onError(e.getMessage());
                     }
                 });
     }
