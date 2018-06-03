@@ -2,6 +2,7 @@ package com.sx.mvp.mvp.article;
 
 import com.sx.mvp.bean.BaseBean;
 import com.sx.mvp.bean.TestBean;
+import com.sx.mvp.mvp.base.IBaseView;
 
 import io.reactivex.Observable;
 
@@ -12,7 +13,7 @@ import io.reactivex.Observable;
  */
 public interface ArticleInfoContract {
 
-     interface View{
+     interface View extends IBaseView{
         void onShowLoading();
         void onHideLoading();
         void onError(String errorMsg);

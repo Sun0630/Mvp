@@ -1,8 +1,5 @@
 package com.sx.mvp.mvp.article;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -10,28 +7,36 @@ import com.orhanobut.logger.Logger;
 import com.sx.mvp.R;
 import com.sx.mvp.bean.BaseBean;
 import com.sx.mvp.bean.TestBean;
+import com.sx.mvp.mvp.base.BaseActivity;
 
 /**
  * @Author sunxin
  * @Date 2018/6/3 17:59
  * @Description V 层
  */
-public class ArticleInfoActivity extends AppCompatActivity implements ArticleInfoContract.View {
+public class ArticleInfoActivity extends BaseActivity<ArticleInfoPresenter> implements ArticleInfoContract.View {
 
 
     private TextView mTextView;
-    private ArticleInfoPresenter mArticleInfoPresenter;
-
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    protected ArticleInfoPresenter createPresenter() {
+        return new ArticleInfoPresenter();
+    }
+
+    @Override
+    protected int getContentLayoutId() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    protected void initView() {
         mTextView = findViewById(R.id.tv_info);
-        mArticleInfoPresenter = new ArticleInfoPresenter(this);
-        //绑定View
-        mArticleInfoPresenter.attachView(this);
-        mArticleInfoPresenter.getArticleList(0);
+    }
+
+    @Override
+    protected void initData() {
+        mPresenter.getArticleList(0);
     }
 
     @Override
@@ -50,7 +55,6 @@ public class ArticleInfoActivity extends AppCompatActivity implements ArticleInf
         Logger.e(errorMsg);
     }
 
-
     @Override
     public void onNetWorkError() {
 
@@ -64,11 +68,4 @@ public class ArticleInfoActivity extends AppCompatActivity implements ArticleInf
         Logger.e(bean.toString());
     }
 
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        //解绑View
-        mArticleInfoPresenter.detachView();
-    }
 }
