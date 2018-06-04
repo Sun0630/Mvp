@@ -1,8 +1,11 @@
 package com.sx.mvp.http.apiservice;
 
 
-import com.sx.mvp.bean.BaseBean;
-import com.sx.mvp.bean.TestBean;
+import com.sx.mvp.bean.ArticleBean;
+import com.sx.mvp.bean.BannerBean;
+import com.sx.mvp.bean.BaseResponse;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -23,5 +26,15 @@ public interface ApiService {
      * @return
      */
     @GET("article/list/{pageNum}/json")
-    Observable<BaseBean<TestBean>> getContent(@Path("pageNum") int pageNum);
+    Observable<BaseResponse<ArticleBean>> getContent(@Path("pageNum") int pageNum);
+
+
+    /**
+     * 获取首页轮播图
+     * @return
+     */
+    @GET("banner/json")
+    Observable<BaseResponse<List<BannerBean>>> getBanners();
+
+
 }

@@ -9,7 +9,7 @@ import java.util.List;
  * @Description
  */
 
-public class TestBean implements Serializable {
+public class ArticleBean implements Serializable {
 
 
     /**

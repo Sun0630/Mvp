@@ -22,6 +22,7 @@ public class BasePresenter<V extends IBaseView> {
 
     public void attach(V view) {
         this.mView = new WeakReference<>(view);
+        // 动态代理
         mProxyView = (V) Proxy.newProxyInstance(view.getClass().getClassLoader(), view.getClass().getInterfaces(), (proxy, method, args) -> {
             //用到View的地方都会走到这里
             if (mView == null || mView.get() == null) {
@@ -35,7 +36,6 @@ public class BasePresenter<V extends IBaseView> {
         //如果不解绑可能会造成内存泄漏
         this.mView = null;
         this.mView.clear();
-        this.mProxyView = null;
     }
 
     public V getView() {

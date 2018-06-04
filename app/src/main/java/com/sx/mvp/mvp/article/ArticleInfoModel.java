@@ -1,10 +1,13 @@
 package com.sx.mvp.mvp.article;
 
-import com.sx.mvp.bean.BaseBean;
-import com.sx.mvp.bean.TestBean;
+import com.sx.mvp.bean.ArticleBean;
+import com.sx.mvp.bean.BannerBean;
+import com.sx.mvp.bean.BaseResponse;
 import com.sx.mvp.http.RetrofitManager;
-import com.sx.mvp.http.RxSchedulers;
+import com.sx.mvp.http.RxUtils;
 import com.sx.mvp.http.apiservice.ApiService;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 
@@ -16,12 +19,23 @@ import io.reactivex.Observable;
 public class ArticleInfoModel implements ArticleInfoContract.Model {
 
     @Override
-    public Observable<BaseBean<TestBean>> getArticleList(int pageNum) {
+    public Observable<BaseResponse<ArticleBean>> getArticleList(int pageNum) {
 
-        return  RetrofitManager
+        return RetrofitManager
                 .getRetrofit()
                 .create(ApiService.class)
                 .getContent(pageNum)
-                .compose(RxSchedulers.applySchedulers());
+                .compose(RxUtils.applySchedulers());
     }
+
+    @Override
+    public Observable<BaseResponse<List<BannerBean>>> getBanners() {
+        return RetrofitManager
+                .getRetrofit()
+                .create(ApiService.class)
+                .getBanners()
+                .compose(RxUtils.applySchedulers());
+    }
+
+
 }
