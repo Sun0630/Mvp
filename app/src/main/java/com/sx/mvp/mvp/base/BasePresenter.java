@@ -35,7 +35,6 @@ public class BasePresenter<V extends IBaseView> {
     public void detach() {
         //如果不解绑可能会造成内存泄漏
         this.mView = null;
-        this.mView.clear();
     }
 
     public V getView() {

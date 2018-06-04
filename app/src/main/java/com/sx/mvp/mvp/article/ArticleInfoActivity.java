@@ -47,7 +47,7 @@ public class ArticleInfoActivity extends BaseActivity implements ArticleInfoCont
     @Override
     protected void initData() {
         mInfoPresenter.getArticleList(0);
-        mInfoPresenter.getBanners();
+//        mInfoPresenter.getBanners();
     }
 
     @Override
